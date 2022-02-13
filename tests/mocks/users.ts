@@ -1,14 +1,14 @@
 export const list = [
   {
     id: 1,
-    username: 'user_one'
+    name: 'user_1'
   },
   {
     id: 2,
-    username: 'user_two'
+    name: 'user_2'
   },
   {
     id: 3,
-    username: 'user_three'
+    name: 'user_3'
   }
 ];

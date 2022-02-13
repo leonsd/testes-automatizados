@@ -6,11 +6,13 @@
   "scripts": {
     "compile": "tsc",
     "start": "nodemon src/server.ts --ignore tests",
+    "run-jest": "jest --collectCoverage --passWithNoTests",
+    "run-jestAll": "jest --collectCoverage --watchAll --passWithNoTests",
     "pretest": "NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test jest --collectCoverage --passWithNoTests",
+    "test": "NODE_ENV=test npm-run-all run-jest posttest --continue-on-error",
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
     "pretest:watchAll": "NODE_ENV=test sequelize db:migrate",
-    "test:watchAll": "NODE_ENV=test jest --collectCoverage --watchAll --passWithNoTests",
+    "test:watchAll": "NODE_ENV=test npm-run-all run-jestAll posttest:watchAll --continue-on-error",
     "posttest:watchAll": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "author": "",
@@ -32,6 +34,7 @@
     "@types/validator": "^13.7.1",
     "jest": "^27.5.0",
     "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
     "sequelize-cli": "^6.4.1",
     "sqlite3": "^5.0.2",
     "ts-jest": "^27.1.3",
