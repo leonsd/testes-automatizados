@@ -5,20 +5,28 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) { }
 
   static getInstance() {
-    return new UserService(new UserRepository());
+    return new UserService(UserRepository.getInstance());
   }
 
-  list(filters?: IFilters) {
+  create(data: any) {
+    return this.userRepository.create(data);
+  }
+
+  async list(filters?: IFilters) {
     return this.userRepository.list(filters);
   }
 
-  show(id: number) {
-    const user = this.userRepository.show(id);
+  async show(id: number) {
+    const user = await this.userRepository.show(id);
 
     if (!user) {
       throw new Error('User not found!');
     }
 
     return user;
+  }
+
+  destroy(id: number) {
+    return this.userRepository.destroy(id);
   }
 }

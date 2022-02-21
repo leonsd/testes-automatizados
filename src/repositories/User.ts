@@ -1,27 +1,26 @@
 import { IFilters } from "../interfaces/IFilters";
-import { IUser } from "../interfaces/IUser";
+import { UserModel } from '../models/User';
 
 export class UserRepository {
-  private users: IUser[];
-
-  constructor() {
-    this.users = [
-      { id: 1, name: 'user_1' },
-      { id: 2, name: 'user_2' },
-      { id: 3, name: 'user_3' },
-    ];
-  }
+  constructor(private readonly model: typeof UserModel) { }
 
   static getInstance() {
-    return new UserRepository();
+    return new UserRepository(UserModel);
+  }
+
+  create(data: any) {
+    return this.model.create(data);
   }
 
   list(filters?: IFilters) {
-    return this.users;
+    return this.model.findAll();
   }
 
   show(id: number) {
-    const user = this.users.find((user) => user.id === id);
-    return user;
+    return this.model.findOne({ where: { id } });
+  }
+
+  destroy(id: number) {
+    return this.model.destroy({ where: { id } });
   }
 }
